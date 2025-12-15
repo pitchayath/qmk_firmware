@@ -236,24 +236,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
      switch(keycode) {
           case TOG_MAC_LANG:
                if (record->event.pressed) {
-                    tap_code16(LCTL(KC_SPC));
+                    register_code(KC_LCTL);
+                    tap_code(KC_SPC);
+                    unregister_code(KC_LCTL);
+
                     if (IS_LAYER_ON(LAYER_MAC_EN)) {
                          layer_move(LAYER_MAC_TH);
                     } else {
                          layer_move(LAYER_MAC_EN);
-                    }
+                    }                    
                }
-               return false;
+               return false; // true will send also tab koycode as mapped in based layer
           case TOG_WIN_LANG:
                if (record->event.pressed) {
-                    tap_code16(LGUI(KC_SPC));
+                    register_code(KC_LGUI);
+                    tap_code(KC_SPC);
+                    unregister_code(KC_LGUI);
+
                     if (IS_LAYER_ON(LAYER_WIN_EN)) {
                          layer_move(LAYER_WIN_TH);
                     } else {
                          layer_move(LAYER_WIN_EN);
                     }
                }
-               return false;
+               return false; // true will send also tab koycode as mapped in based layer
           case MAC_LOCK_SCREEN:
                if (record->event.pressed) {
                     set_mods(MOD_LCTL | MOD_LGUI);
